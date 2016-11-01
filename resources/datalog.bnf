@@ -1,0 +1,28 @@
+program            = statement*
+statement          = assertion
+                     | retraction
+                     | query
+assertion          = clause <'.'> <whitespace>
+retraction         = clause <'~'> <whitespace>
+query              = literal <'?'> <whitespace>
+<whitespace>       = #'\s*'
+clause             = literal <whitespace> <':-'> <whitespace> body
+                     | literal
+body               = literal <whitespace> <','> <whitespace> body
+                     | literal
+literal            = predicate-sym <'('> <whitespace> <')'>
+                     | predicate-sym <'('> <whitespace> terms <whitespace> <')'>
+                     | predicate-sym
+                     | term <whitespace> <'='> <whitespace> term
+                     | term <whitespace> <'!='> <whitespace> term
+predicate-sym      = IDENTIFIER
+                     | STRING
+terms              = term
+                     | term <whitespace> <','> <whitespace> terms
+term               = VARIABLE
+                     | constant
+constant           = IDENTIFIER
+                     | STRING
+VARIABLE           = #'[A-Z][a-z_A-Z0-9]*'
+IDENTIFIER         = #'[a-z][a-z_A-Z0-9]*'
+STRING             = #'"[\w\W]+"'
