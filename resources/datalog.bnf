@@ -17,8 +17,7 @@ literal            = predicate-sym <'('> <whitespace> <')'>
                      | term <whitespace> <'!='> <whitespace> term
 predicate-sym      = IDENTIFIER
                      | STRING
-terms              = term
-                     | term <whitespace> <','> <whitespace> terms
+terms              = term (<whitespace> <','> <whitespace> term)*
 term               = VARIABLE
                      | constant
 constant           = IDENTIFIER
